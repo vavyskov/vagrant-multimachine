@@ -1,4 +1,4 @@
-# vagrant-symfony
+# vagrant-multimachine
 
 Debian LAPP (Linux, Apache, PostgreSQL, PHP) stack
 
