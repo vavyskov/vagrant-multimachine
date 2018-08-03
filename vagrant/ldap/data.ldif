@@ -1,0 +1,59 @@
+## Initialize basic DN
+
+dn: ou=group,dc=example,dc=com
+objectclass: organizationalUnit
+
+dn: ou=people,dc=example,dc=com
+objectClass: organizationalUnit
+
+## -----------------------------------------------------------------------------
+
+## Add group
+
+dn: cn=nas,ou=group,dc=example,dc=com
+objectClass: posixGroup
+gidNumber: 400
+description: NAS group
+memberUid: user1
+memberUid: user2
+
+## -----------------------------------------------------------------------------
+
+## Add people
+
+dn: cn=First User,ou=people,dc=example,dc=com
+objectClass: top
+objectClass: posixAccount
+objectClass: inetOrgPerson
+uidNumber: 1001
+gidNumber: 400
+uid: user1
+userPassword: user1
+#userPassword: {CRYPT}$1$58hxEKLS$ypZarETITIXH4WMotxS2k/
+givenName: GivenameFirst
+sn: SurnameFIRST
+mail: user1@example.com
+telephoneNumber: +420 000 001 001
+homeDirectory: /home/user1
+loginShell: /bin/bash
+#jpegPhoto::$(base64 -w 66 /vagrant/config/people/person-1.jpg | sed 's,^, ,g')
+jpegPhoto:< file:///vagrant/ldap/people/person-1.jpg
+
+dn: cn=Second User,ou=people,dc=example,dc=com
+objectClass: top
+objectClass: posixAccount
+objectClass: inetOrgPerson
+uidNumber: 1002
+gidNumber: 400
+uid: user2
+userPassword: user2
+#userPassword: {CRYPT}$1$a1ade9eu$zEAzuj1nO5FU4Hx.BE3cq1
+givenName: GivennameSecond
+sn: SurnameSECOND
+mail: user2@example.com
+telephoneNumber: +420 000 001 002
+homeDirectory: /home/user2
+loginShell: /bin/bash
+#jpegPhoto::$(base64 -w 66 /vagrant/config/people/person-2.jpg | sed 's,^, ,g')
+jpegPhoto:< file:///vagrant/ldap/people/person-2.jpg
+

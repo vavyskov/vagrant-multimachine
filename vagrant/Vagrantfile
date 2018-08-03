@@ -1,0 +1,136 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+#BOX_IMAGE = "debian/contrib-stretch64"
+
+Vagrant.configure("2") do |config|
+  
+  ## Box
+  #config.vm.box = BOX_IMAGE
+  config.vm.box = "debian/contrib-stretch64"
+  
+  ## Sources (not requred for vagrantup.com)
+  #config.vm.box_url = "http://files.vagrantup.com/customBox.box"
+  #config.vm.box_url = "file:///C:/path/to/vagrant/customBox.box"
+  #config.vm.box_url = "file:///opt/vagrant/boxes/customBox.box"
+
+  
+  
+  ## Run inline shell command on all machines (example)
+  #config.vm.provision :shell, inline: "apt update"
+
+  ## Run shell script on all machines (example)
+  #config.vm.provision :shell, path: "all/all.sh"
+  
+    
+  
+  config.vm.provider "virtualbox" do |vb|
+    #vb.linked_clone = true
+    vb.cpus = 1
+    ## HDD cache off !!!
+    vb.customize [
+      "storagectl", :id, 
+      "--name", "SATA Controller", 
+      "--hostiocache", "off"
+    ]
+    ## Fix slow DNS lookups
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    #vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    #vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
+  end
+  
+  ## Multi-Machine
+  config.vm.define "symfony" do |symfony|
+    symfony.vm.hostname = "symfony.example.com"
+    symfony.vm.network "private_network", ip: "192.168.33.10"
+    symfony.vm.network "forwarded_port", guest: 80, host: 80, host_ip: "127.0.0.1"
+    symfony.vm.provision :shell, path: "symfony/symfony.sh"
+    symfony.vm.provider "virtualbox" do |vb|
+      vb.name = "symfony"
+      vb.memory = 2048
+      #vb.customize ['modifyvm', :id, '--natnet1', '192.168.33.0/24']
+    end
+    symfony.vm.synced_folder "../workspace/", "/home/vagrant/workspace"
+  end
+  config.vm.define "ldap" do |ldap|
+    ldap.vm.hostname = "ldap.example.com"
+    #ldap.hostmanager.aliases = %w(ldap.example.com)
+    ldap.vm.network :private_network, ip: "192.168.33.20"
+    ldap.vm.network "forwarded_port", guest: 8080, host: 8080, host_ip: "127.0.0.1"
+    ldap.vm.provision :shell, path: "ldap/ldap.sh"
+    ldap.vm.provider "virtualbox" do |vb|
+      vb.name = "ldap"
+      vb.memory = 512
+      #vb.customize ['modifyvm', :id, '--natnet1', '192.168.33.0/24']
+    end
+  end
+
+  #config.vm.define "postgres" do |postgres|
+  #  postgres.vm.box = "ubuntu/xenial64"
+  #  postgres.vm.hostname = "postgres"
+  #  postgres.vm.network :private_network, ip: "192.168.33.12"
+  #end
+
+  
+  
+  
+  
+  ## Share an additional folder to the guest VM
+  #config.vm.synced_folder "../workspace/", "/home/vagrant/workspace"
+  
+  #config.vm.synced_folder "../workspace/", "/home/vagrant/workspace", {
+  #  :mount_options => ['dmode=775','fmode=664'],
+  #  id: "vagrant-root",
+  #  :owner => "www-data",
+  #  :group => "vagrant"
+  #}
+  
+  ## Development
+  #development_config.vm.synced_folder "...", "/var/www", {
+  #  :mount_options => ['dmode=777','fmode=777'],
+  #  :owner => "www-data",
+  #  :group => "vagrant"
+  #}
+  
+  
+  
+  
+  
+  ## https://github.com/beetboxvm/beetbox/blob/master/Vagrantfile (VirtualBox, VMware Fusion, Parallels) !!!
+  #config.vm.provider "vmware_fusion"
+  
+  
+  
+  
+  
+  ## Multiple machines (app1, app2)
+  ## https://www.vagrantup.com/docs/multi-machine/
+  ## https://peteris.rocks/blog/vagrantfile-for-linux/
+  
+  
+  
+  
+  
+  ## Execute script as Root user
+  ## https://www.vagrantup.com/intro/getting-started/provisioning.html
+  
+  
+  
+  
+    
+  ## Execute script as Vagrant user
+  #config.vm.provision :shell, privileged: false, inline: "/bin/bash --login /vagrant/config/vagrant.sh"
+  #$script = "/bin/bash --login /vagrant/config/vagrant.sh"
+  #config.vm.provision :shell, privileged: false, inline: $script
+  
+  
+  
+  
+  
+  ## Script from path
+  #config.vm.provision :shell, path: "config/script.sh"
+  
+  ## Shell inline command example
+  #config.vm.provision :shell, inline: "apt update"
+
+end

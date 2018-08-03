@@ -1,0 +1,11 @@
+# Ignore generated directories and files
+**.vagrant/
+**.box
+
+# Ignore system files
+.DS_Store
+
+# Ignore IDEs files
+.idea/              # PhpStorm
+
+# Ignore configuration files that may contain sensitive information
