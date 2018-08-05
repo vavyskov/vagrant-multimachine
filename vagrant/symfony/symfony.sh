@@ -15,7 +15,7 @@ apt-get update
 apt-get upgrade -y
 
 ## Certificates
-apt install -y ca-certificates
+apt install -y ca-certificates openssl
 
 ## Language
 apt install -y locales
@@ -162,12 +162,13 @@ sed -i 's/local.*all.*all.*peer/local\tall\t\tall\t\t\t\t\tmd5/' /etc/postgresql
 ## -----------------------------------------------------------------------------
 
 ## Adminer (old)
-#apt install -y adminer
+apt install -y adminer
 
 ## Adminer (latest)
-mkdir -p /usr/share/adminer/adminer
-wget "http://www.adminer.org/latest.php" -O /usr/share/adminer/adminer/index.php
-echo '50 2 5 * * /usr/bin/wget "http://www.adminer.org/latest.php" -O /usr/share/adminer/adminer/index.php' > /etc/cron.d/adminer
+#mkdir -p /usr/share/adminer/adminer
+#wget "http://www.adminer.org/latest.php" -O /usr/share/adminer/adminer/index.php
+#echo '50 2 5 * * /usr/bin/wget "http://www.adminer.org/latest.php" -O /usr/share/adminer/adminer/index.php' > /etc/cron.d/adminer
+# Fixme: Permission
 
 ## Adminer - alias
 echo "Alias /adminer /usr/share/adminer/adminer" | sudo tee /etc/apache2/conf-available/adminer.conf
