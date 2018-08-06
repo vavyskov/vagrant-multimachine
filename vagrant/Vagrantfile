@@ -5,16 +5,17 @@
 
 Vagrant.configure("2") do |config|
   
-  ## Box
-  #config.vm.box = BOX_IMAGE
-  config.vm.box = "debian/contrib-stretch64"
-  
-  ## Sources (not requred for vagrantup.com)
+  ## Sources (not required for vagrantup.com)
   #config.vm.box_url = "http://files.vagrantup.com/customBox.box"
   #config.vm.box_url = "file:///C:/path/to/vagrant/customBox.box"
   #config.vm.box_url = "file:///opt/vagrant/boxes/customBox.box"
-
   
+  ## Box (required)
+  #config.vm.box = BOX_IMAGE
+  config.vm.box = "debian/contrib-stretch64"
+  #config.vm.box = "vavyskov/multimachine"
+  
+
   
   ## Run inline shell command on all machines (example)
   #config.vm.provision :shell, inline: "apt update"
