@@ -6,6 +6,6 @@
 .DS_Store
 
 # Ignore IDEs files
-.idea/              # PhpStorm
+.idea/
 
 # Ignore configuration files that may contain sensitive information
