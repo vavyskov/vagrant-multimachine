@@ -91,7 +91,7 @@ npm install yarn -g
 
 ## Apache
 apt install -y apache2
-cp /vagrant/symfony/apache.conf /etc/apache2/sites-enabled/000-default.conf
+cp /vagrant/symfony/apache.conf /etc/apache2/sites-available/000-default.conf
 
 ## Apache website permissions
 apt install -y libapache2-mpm-itk
